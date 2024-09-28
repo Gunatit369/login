@@ -68,9 +68,38 @@ div {
 </div>
 
 <script>
-   const scriptURL = 'https://script.google.com/macros/s/AKfycbyHdMMcbLmUDB64LtiBh_5raAyGxx0yRekFZjCdjsu_rfkWUeFOoo7TUDq9MkTHkySi/exec';
+   const scriptURL = 'https://script.google.com/macros/s/AKfycby56tI7JPosD6RTTstQZC3W6TMIACR-StH5et4_d0sRTDn2Ek5pLiaioAEpoB8iUb1G/exec';
   
   const form = document.forms['sahaj369'];
+  // Function to register a new user
+function registerUser(name, number) {
+  // Validate user input
+  if (!name || !number) {
+    alert('Please enter a name and number');
+    return;
+  }
+
+  // Store user data in local storage
+  localStorage.setItem('name', name);
+  localStorage.setItem('number',number);
+
+  // Send user data to Google Sheet
+  const sheetUrl = `https://script.google.com/macros/s/AKfycby56tI7JPosD6RTTstQZC3W6TMIACR-StH5et4_d0sRTDn2Ek5pLiaioAEpoB8iUb1G/exec`;
+  const sheetData = {
+    'name': name,
+    'number': number
+  };
+  fetch(sheetUrl, {
+    method: 'POST',
+    body: JSON.stringify(sheetData),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}
 
   form.addEventListener('submit', e => {
       e.preventDefault();
@@ -85,7 +114,7 @@ div {
 
   // Agar input sahi hai, toh next page par redirect karein
   if (name !== '' && number !== '') {
-    window.location.href = 'shree.html'; // apne next page ki URL yahan par daalein
+    window.location.href = 'sajah.html'; // apne next page ki URL yahan par daalein
   } else {
     alert('Kripya name aur number dono bharein');
   }
